@@ -10,7 +10,7 @@
 		<queue />
 	</channel>
 	<channel id="rejected">
-		<queue />
+		<queue capacity="1000000" />
 	</channel>
 	<gateway id='transactionCancellationsGateway'
 		default-request-channel="input"
