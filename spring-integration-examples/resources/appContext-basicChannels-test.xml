@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+
+	<int:channel id="bookingRequestChannel" />
+	<int:service-activator input-channel="bookingRequestChannel"
+		output-channel="outputChargedBooking" id="chargedBooking" ref="billForBookingService" />
+	<int:channel id="outputChargedBooking" />
+	<int:service-activator id="seatAvailable"
+		input-channel="outputChargedBooking" output-channel="emailConfirmationRequest"
+		ref='seatAvailabilityService' />
+	<int:channel id="emailConfirmationRequest" />
+	<int:outbound-channel-adapter id="emailConfirmation"
+		channel="emailConfirmationRequest" ref='emailConfirmationService' />
+	<bean id="billForBookingService"
+		class="paz.gps.integration.channel.service.BillForBookingService" >
+		<property name="bookingPricesBusiness" ref="bookingPricesBusiness"/>
+		</bean>
+	<bean id="emailConfirmationService"
+		class="paz.gps.integration.channel.service.EmailConfirmationService" />
+	<bean id="seatAvailabilityService"
+		class="paz.gps.integration.channel.service.SeatAvailabilityService" />
+	<bean id="bookingPricesBusiness"
+		class="paz.gps.integration.channel.BookingPricesBusinessStub">
+	</bean>
+</beans>
