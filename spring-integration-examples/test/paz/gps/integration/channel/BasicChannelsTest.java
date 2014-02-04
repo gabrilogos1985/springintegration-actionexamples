@@ -22,15 +22,16 @@ import paz.gps.integration.channel.service.MailNotification;
 @ContextConfiguration(locations = "classpath:appContext-basicChannels-test.xml")
 public class BasicChannelsTest {
 
-	@Autowired
-	private EmailConfirmationService mailNotificationService;
-	@Autowired
-	private BookingPricesBusinessStub pricesBusiness;
 
 	@Autowired
 	@Qualifier("bookingRequestChannel")
-	private MessageChannel bookingRequestChannel;
-
+	 MessageChannel bookingRequestChannel;
+	
+	@Autowired
+	BookingPricesBusinessStub pricesBusiness;
+	
+	@Autowired
+	EmailConfirmationService mailNotificationService;
 	@Test
 	public void passingMessageToServiceAndNotification() {
 		Integer expectedReservation = 1820;

@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd">
 
-
+  <int:annotation-config/>
 	<int:channel id="bookingRequestChannel" />
 	<int:service-activator input-channel="bookingRequestChannel"
 		output-channel="outputChargedBooking" id="chargedBooking" ref="billForBookingService" />
@@ -14,8 +14,7 @@
 		input-channel="outputChargedBooking" output-channel="emailConfirmationRequest"
 		ref='seatAvailabilityService' />
 	<int:channel id="emailConfirmationRequest" />
-	<int:outbound-channel-adapter id="emailConfirmation"
-		channel="emailConfirmationRequest" ref='emailConfirmationService' />
+	<int:outbound-channel-adapter channel="emailConfirmationRequest" ref='emailConfirmationService' />
 	<bean id="billForBookingService"
 		class="paz.gps.integration.channel.service.BillForBookingService" >
 		<property name="bookingPricesBusiness" ref="bookingPricesBusiness"/>

@@ -11,7 +11,7 @@ import paz.gps.integration.channel.SeatConfirmation;
 
 public class EmailConfirmationService {
 
-	private MailNotification mailNotification;
+	private MailNotification mailNotification = null;
 
 	public void handleMessage(Message<?> message) throws MessagingException {
 		SeatConfirmation payload = (SeatConfirmation) message.getPayload();
